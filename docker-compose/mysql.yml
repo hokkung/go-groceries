@@ -1,0 +1,20 @@
+version: '3.1'
+services:
+    db:
+        image: mysql:8
+        container_name: mysql
+        command: --default-authentication-plugin=caching_sha2_password
+        restart: always
+        environment:
+            MYSQL_PASSWORD: root
+            MYSQL_ROOT_PASSWORD: root
+        ports:
+            - 3306:3306
+    phpmyadmin:
+        image: phpmyadmin
+        ports:
+          -   8080:80
+        depends_on:
+          - db
+
+## docker compose -f [FILE_NAME] up
