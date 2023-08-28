@@ -7,16 +7,6 @@ import (
 )
 
 func main() {
-	// _, err := repository.NewGormDB()
-	// if err != nil {
-	// 	fmt.Println(err)
-	// 	return
-	// }
-
-	// customizer := server.NewCustomizer()
-	// server := srv.NewServer(customizer)
-	// server.Start()
-
 	container, err := di.InitializeApplication()
 	if err != nil {
 		fmt.Println(err)
