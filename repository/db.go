@@ -6,6 +6,10 @@ import (
 	"gorm.io/gorm"
 )
 
+func ProvideGormDB() (*gorm.DB, error) {
+	return NewGormDB()
+}
+
 func NewGormDB() (*gorm.DB, error) {
 	dsn := "root:root@tcp(localhost:3306)/grocery?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
