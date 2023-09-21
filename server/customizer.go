@@ -12,6 +12,7 @@ import (
 
 type Customizer struct {
 	productHandler handler.ProductHandler
+	userHandler    handler.UserHandler
 }
 
 func (c *Customizer) Register(s *srv.Server) {
@@ -21,12 +22,27 @@ func (c *Customizer) Register(s *srv.Server) {
 			"message": fmt.Sprintf("pong %+v", id),
 		})
 	})
+
+	userGroup := s.Engine.Group("/users")
+	userGroup.POST("/login", c.userHandler.Login)
 }
 
-func NewCustomizer(productHandler handler.ProductHandler) *Customizer {
-	return &Customizer{productHandler: productHandler}
+func NewCustomizer(
+	productHandler handler.ProductHandler,
+	userHandler handler.UserHandler,
+) *Customizer {
+	return &Customizer{
+		productHandler: productHandler,
+		userHandler:    userHandler,
+	}
 }
 
-func ProvideCustomizer(productHandler handler.ProductHandler) srv.ServerCustomizer {
-	return NewCustomizer(productHandler)
+func ProvideCustomizer(
+	productHandler handler.ProductHandler,
+	userHandler handler.UserHandler,
+) srv.ServerCustomizer {
+	return NewCustomizer(
+		productHandler,
+		userHandler,
+	)
 }

@@ -37,6 +37,8 @@ github.com/hokkung/srv v0.0.0-20230818225051-bd412536dbd0 h1:C+puTQpAmvAfiAmQp5h
 github.com/hokkung/srv v0.0.0-20230818225051-bd412536dbd0/go.mod h1:nzpMHuwDo78HaGmeT8NDDvyeB6KXTVdyPqSp3Pv4R3k=
 github.com/hokkung/srv v1.0.1 h1:ciuIY+f/SkIUXVQi0EK9G95RZ0ju4+ikwL1YIRB24XE=
 github.com/hokkung/srv v1.0.1/go.mod h1:nzpMHuwDo78HaGmeT8NDDvyeB6KXTVdyPqSp3Pv4R3k=
+github.com/hokkung/srv v1.1.0 h1:QJhPzarCV1Xa+wAiL1H5elgJSFtIMfLG8p69ib+x764=
+github.com/hokkung/srv v1.1.0/go.mod h1:nzpMHuwDo78HaGmeT8NDDvyeB6KXTVdyPqSp3Pv4R3k=
 github.com/jinzhu/inflection v1.0.0 h1:K317FqzuhWc8YvSVlFMCCUb36O/S9MCKRDI7QkRKD/E=
 github.com/jinzhu/inflection v1.0.0/go.mod h1:h+uFLlag+Qp1Va5pdKtLDYj+kHp5pxUVkryuEj+Srlc=
 github.com/jinzhu/now v1.1.5 h1:/o9tlHleP7gOFmsnYNz3RGnqzefHA47wQpKrrdTIwXQ=

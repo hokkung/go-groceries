@@ -14,21 +14,24 @@ var APISet = wire.NewSet(
 	ServiceSet,
 	HandlerSet,
 	server.ProvideCustomizer,
-	srv.NewServer,
+	srv.ProvideServer,
 	wire.Struct(new(ApplicationAPI), "*"),
 )
 
 var RepositorySet = wire.NewSet(
 	repository.ProvideGormDB,
 	repository.ProvideProductRepository,
+	repository.ProvideUserRepository,
 )
 
 var ServiceSet = wire.NewSet(
 	service.ProvideProductService,
+	service.ProvideUserService,
 )
 
 var HandlerSet = wire.NewSet(
 	handler.ProvideProductHandler,
+	handler.ProvideUserHandler,
 )
 
 type ApplicationAPI struct {

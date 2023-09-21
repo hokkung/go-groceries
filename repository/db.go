@@ -18,6 +18,7 @@ func NewGormDB() (*gorm.DB, error) {
 	}
 
 	db.AutoMigrate(&entity.Product{})
+	db.AutoMigrate(&entity.User{})
 
 	return db, nil
 }

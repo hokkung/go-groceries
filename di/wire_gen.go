@@ -24,8 +24,11 @@ func InitializeApplication() (*ApplicationAPI, error) {
 	productRepository := repository.ProvideProductRepository(db)
 	productService := service.ProvideProductService(productRepository)
 	productHandler := handler.ProvideProductHandler(productService)
-	serverCustomizer := server.ProvideCustomizer(productHandler)
-	serverServer := server2.NewServer(serverCustomizer)
+	userRepository := repository.ProvideUserRepository(db)
+	userService := service.ProvideUserService(userRepository)
+	userHandler := handler.ProvideUserHandler(userService)
+	serverCustomizer := server.ProvideCustomizer(productHandler, userHandler)
+	serverServer := server2.ProvideServer(serverCustomizer)
 	applicationAPI := &ApplicationAPI{
 		Server: serverServer,
 	}
