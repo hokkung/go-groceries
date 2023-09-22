@@ -1,12 +1,10 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"os"
 	"os/signal"
 	"syscall"
-	"time"
 
 	"github.com/hokkung/go-groceries/di"
 )
@@ -26,6 +24,6 @@ func main() {
 	<-gracefulShutdown
 
 	cleanUp()
-	
+
 	fmt.Println("application gracefully shutdown.")
 }
