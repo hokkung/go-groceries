@@ -16,21 +16,44 @@ import (
 
 // Injectors from wire.go:
 
-func InitializeApplication() (*ApplicationAPI, error) {
+func InitializeApplication() (*ApplicationAPI, func(), error) {
 	db, err := repository.ProvideGormDB()
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	productRepository := repository.ProvideProductRepository(db)
+	productRepository, cleanup, err := repository.ProvideProductRepository(db)
+	if err != nil {
+		return nil, nil, err
+	}
 	productService := service.ProvideProductService(productRepository)
 	productHandler := handler.ProvideProductHandler(productService)
-	userRepository := repository.ProvideUserRepository(db)
+	userRepository, cleanup2, err := repository.ProvideUserRepository(db)
+	if err != nil {
+		cleanup()
+		return nil, nil, err
+	}
 	userService := service.ProvideUserService(userRepository)
 	userHandler := handler.ProvideUserHandler(userService)
-	serverCustomizer := server.ProvideCustomizer(productHandler, userHandler)
-	serverServer := server2.ProvideServer(serverCustomizer)
+	serverCustomizer, cleanup3, err := server.ProvideCustomizer(productHandler, userHandler)
+	if err != nil {
+		cleanup2()
+		cleanup()
+		return nil, nil, err
+	}
+	serverServer, cleanup4, err := server2.ProvideServer(serverCustomizer)
+	if err != nil {
+		cleanup3()
+		cleanup2()
+		cleanup()
+		return nil, nil, err
+	}
 	applicationAPI := &ApplicationAPI{
 		Server: serverServer,
 	}
-	return applicationAPI, nil
+	return applicationAPI, func() {
+		cleanup4()
+		cleanup3()
+		cleanup2()
+		cleanup()
+	}, nil
 }

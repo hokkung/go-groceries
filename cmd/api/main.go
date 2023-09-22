@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	container, err := di.InitializeApplication()
+	container, cleanUp, err := di.InitializeApplication()
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -25,10 +25,7 @@ func main() {
 	signal.Notify(gracefulShutdown, syscall.SIGTERM, syscall.SIGINT)
 	<-gracefulShutdown
 
-	container.Server.Stop()
-
-	_, cancle := context.WithTimeout(context.Background(), 5*time.Second)
-	cancle()
+	cleanUp()
 	
 	fmt.Println("application gracefully shutdown.")
 }

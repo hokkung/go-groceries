@@ -40,9 +40,9 @@ func NewCustomizer(
 func ProvideCustomizer(
 	productHandler handler.ProductHandler,
 	userHandler handler.UserHandler,
-) srv.ServerCustomizer {
+) (srv.ServerCustomizer, func(), error) {
 	return NewCustomizer(
 		productHandler,
 		userHandler,
-	)
+	), func() {}, nil
 }

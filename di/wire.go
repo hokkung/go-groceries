@@ -7,7 +7,7 @@ import (
 	"github.com/google/wire"
 )
 
-func InitializeApplication() (*ApplicationAPI, error) {
+func InitializeApplication() (*ApplicationAPI, func(), error) {
 	wire.Build(APISet)
-	return &ApplicationAPI{}, nil
+	return &ApplicationAPI{}, func(){}, nil
 }

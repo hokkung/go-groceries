@@ -20,6 +20,6 @@ func NewProductRepository(db *gorm.DB) *productRepository {
 	}
 }
 
-func ProvideProductRepository(db *gorm.DB) ProductRepository {
-	return NewProductRepository(db)
+func ProvideProductRepository(db *gorm.DB) (ProductRepository, func(), error) {
+	return NewProductRepository(db), func(){}, nil
 }

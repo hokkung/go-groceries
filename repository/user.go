@@ -20,6 +20,6 @@ func NewUserRepository(db *gorm.DB) *userRepository {
 	}
 }
 
-func ProvideUserRepository(db *gorm.DB) UserRepository {
-	return NewUserRepository(db)
+func ProvideUserRepository(db *gorm.DB) (UserRepository, func(), error) {
+	return NewUserRepository(db), func(){}, nil
 }
