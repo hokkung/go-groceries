@@ -7,9 +7,12 @@ import (
 	"syscall"
 
 	"github.com/hokkung/go-groceries/di"
+	"github.com/hokkung/go-groceries/pkg/env"
 )
 
 func main() {
+	env.MustLoadEnv()
+
 	container, cleanUp, err := di.InitializeApplication()
 	if err != nil {
 		fmt.Println(err)
