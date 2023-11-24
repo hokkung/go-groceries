@@ -4,7 +4,12 @@ go 1.20
 
 require gorm.io/driver/mysql v1.5.1
 
-require github.com/hokkung/srv v1.1.1 // indirect
+require (
+	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/hokkung/srv v1.1.1 // indirect
+	github.com/pmezard/go-difflib v1.0.0 // indirect
+	github.com/stretchr/testify v1.8.4 // indirect
+)
 
 require (
 	github.com/bytedance/sonic v1.10.1 // indirect
