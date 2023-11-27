@@ -2,6 +2,8 @@ package repository
 
 import "gorm.io/gorm"
 
+
+//go:generate mockgen -source ./user.go -destination ./mock/mock_user.go 
 type UserRepository interface {
 	Model() string
 }
