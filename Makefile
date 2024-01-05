@@ -3,3 +3,6 @@ build:
 
 run_main:
 	go run ./cmd/api/main.go
+
+test:
+	go test -cover ./...
