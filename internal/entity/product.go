@@ -9,3 +9,7 @@ type Product struct {
 	gorm.Model
 	domain.Name
 }
+
+func (m *Product) Table() string {
+	return "products"
+}

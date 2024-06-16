@@ -7,3 +7,7 @@ type User struct {
 	Name  string `gorm:"column:name"`
 	Email string `gorm:"column:email"`
 }
+
+func (m *User) Table() string {
+	return "products"
+}
