@@ -7,8 +7,17 @@ import (
 	"gorm.io/gorm"
 )
 
+type Entity interface {
+	Table() string
+}
+
 func ProvideGormDB(config config.Configuration) (*gorm.DB, error) {
 	return NewGormDB(config)
+}
+
+var entities = []Entity{
+	&entity2.Product{},
+	&entity2.User{},
 }
 
 func NewGormDB(config config.Configuration) (*gorm.DB, error) {
@@ -18,8 +27,12 @@ func NewGormDB(config config.Configuration) (*gorm.DB, error) {
 		return nil, err
 	}
 
-	db.AutoMigrate(&entity2.Product{})
-	db.AutoMigrate(&entity2.User{})
+	for _, ent := range entities {
+		err = db.AutoMigrate(ent)
+		if err != nil {
+			return nil, err
+		}
+	}
 
 	return db, nil
 }
