@@ -2,6 +2,7 @@ package di
 
 import (
 	"github.com/google/wire"
+	"github.com/hokkung/go-groceries/config"
 	handler2 "github.com/hokkung/go-groceries/internal/handler"
 	repository2 "github.com/hokkung/go-groceries/internal/repository"
 	"github.com/hokkung/go-groceries/internal/server"
@@ -10,12 +11,17 @@ import (
 )
 
 var APISet = wire.NewSet(
+	ConfigSet,
 	RepositorySet,
 	ServiceSet,
 	HandlerSet,
 	server.ProvideCustomizer,
 	srv.ProvideServer,
 	wire.Struct(new(ApplicationAPI), "*"),
+)
+
+var ConfigSet = wire.NewSet(
+	config.ProvideConfiguration,
 )
 
 var RepositorySet = wire.NewSet(

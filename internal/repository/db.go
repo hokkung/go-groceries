@@ -1,17 +1,18 @@
 package repository
 
 import (
+	"github.com/hokkung/go-groceries/config"
 	entity2 "github.com/hokkung/go-groceries/internal/entity"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
-func ProvideGormDB() (*gorm.DB, error) {
-	return NewGormDB()
+func ProvideGormDB(config config.Configuration) (*gorm.DB, error) {
+	return NewGormDB(config)
 }
 
-func NewGormDB() (*gorm.DB, error) {
-	dsn := "root:root@tcp(localhost:3306)/grocery?charset=utf8mb4&parseTime=True&loc=Local"
+func NewGormDB(config config.Configuration) (*gorm.DB, error) {
+	dsn := config.MysqlProperties.DNS()
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		return nil, err

@@ -8,33 +8,35 @@ package di
 
 import (
 	"context"
-	handler2 "github.com/hokkung/go-groceries/internal/handler"
-	repository2 "github.com/hokkung/go-groceries/internal/repository"
+	"github.com/hokkung/go-groceries/config"
+	"github.com/hokkung/go-groceries/internal/handler"
+	"github.com/hokkung/go-groceries/internal/repository"
 	"github.com/hokkung/go-groceries/internal/server"
-	service2 "github.com/hokkung/go-groceries/internal/service"
+	"github.com/hokkung/go-groceries/internal/service"
 	server2 "github.com/hokkung/srv/server"
 )
 
 // Injectors from wire.go:
 
 func InitializeApplication(context2 context.Context) (*ApplicationAPI, func(), error) {
-	db, err := repository2.ProvideGormDB()
+	configuration := config.ProvideConfiguration()
+	db, err := repository.ProvideGormDB(configuration)
 	if err != nil {
 		return nil, nil, err
 	}
-	productRepository, cleanup, err := repository2.ProvideProductRepository(db)
+	productRepository, cleanup, err := repository.ProvideProductRepository(db)
 	if err != nil {
 		return nil, nil, err
 	}
-	productService := service2.ProvideProductService(productRepository)
-	productHandler := handler2.ProvideProductHandler(productService)
-	userRepository, cleanup2, err := repository2.ProvideUserRepository(db)
+	productService := service.ProvideProductService(productRepository)
+	productHandler := handler.ProvideProductHandler(productService)
+	userRepository, cleanup2, err := repository.ProvideUserRepository(db)
 	if err != nil {
 		cleanup()
 		return nil, nil, err
 	}
-	userService := service2.ProvideUserService(userRepository)
-	userHandler := handler2.ProvideUserHandler(userService)
+	userService := service.ProvideUserService(userRepository)
+	userHandler := handler.ProvideUserHandler(userService)
 	serverCustomizer, cleanup3, err := server.ProvideCustomizer(productHandler, userHandler)
 	if err != nil {
 		cleanup2()
