@@ -1,6 +1,8 @@
 package service
 
-import "github.com/hokkung/go-groceries/repository"
+import (
+	"github.com/hokkung/go-groceries/internal/repository"
+)
 
 type ProductService interface {
 	Get(id int) int

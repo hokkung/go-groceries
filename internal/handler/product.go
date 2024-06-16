@@ -1,6 +1,8 @@
 package handler
 
-import "github.com/hokkung/go-groceries/service"
+import (
+	"github.com/hokkung/go-groceries/internal/service"
+)
 
 type ProductHandler interface {
 	Get(id int) int

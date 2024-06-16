@@ -1,10 +1,10 @@
 package handler
 
 import (
+	"github.com/hokkung/go-groceries/internal/service"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/hokkung/go-groceries/service"
 )
 
 type UserHandler interface {
