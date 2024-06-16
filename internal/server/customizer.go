@@ -2,17 +2,16 @@ package server
 
 import (
 	"fmt"
+	handler2 "github.com/hokkung/go-groceries/internal/handler"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/hokkung/go-groceries/handler"
-
 	srv "github.com/hokkung/srv/server"
 )
 
 type Customizer struct {
-	productHandler handler.ProductHandler
-	userHandler    handler.UserHandler
+	productHandler handler2.ProductHandler
+	userHandler    handler2.UserHandler
 }
 
 func (c *Customizer) Register(s *srv.Server) {
@@ -28,8 +27,8 @@ func (c *Customizer) Register(s *srv.Server) {
 }
 
 func NewCustomizer(
-	productHandler handler.ProductHandler,
-	userHandler handler.UserHandler,
+	productHandler handler2.ProductHandler,
+	userHandler handler2.UserHandler,
 ) *Customizer {
 	return &Customizer{
 		productHandler: productHandler,
@@ -38,8 +37,8 @@ func NewCustomizer(
 }
 
 func ProvideCustomizer(
-	productHandler handler.ProductHandler,
-	userHandler handler.UserHandler,
+	productHandler handler2.ProductHandler,
+	userHandler handler2.UserHandler,
 ) (srv.ServerCustomizer, func(), error) {
 	return NewCustomizer(
 		productHandler,

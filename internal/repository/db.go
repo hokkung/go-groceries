@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"github.com/hokkung/go-groceries/entity"
+	entity2 "github.com/hokkung/go-groceries/internal/entity"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -17,8 +17,8 @@ func NewGormDB() (*gorm.DB, error) {
 		return nil, err
 	}
 
-	db.AutoMigrate(&entity.Product{})
-	db.AutoMigrate(&entity.User{})
+	db.AutoMigrate(&entity2.Product{})
+	db.AutoMigrate(&entity2.User{})
 
 	return db, nil
 }

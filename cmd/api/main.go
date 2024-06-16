@@ -3,10 +3,10 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/hokkung/go-groceries/internal/di"
 	"os/signal"
 	"syscall"
 
-	"github.com/hokkung/go-groceries/di"
 	"github.com/hokkung/go-groceries/pkg/env"
 )
 
