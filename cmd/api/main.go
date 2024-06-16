@@ -1,28 +1,42 @@
 package main
 
 import (
+	"context"
 	"fmt"
+	"os/signal"
+	"syscall"
 
 	"github.com/hokkung/go-groceries/di"
 	"github.com/hokkung/go-groceries/pkg/env"
-	srvutil "github.com/hokkung/srv/util"
 )
 
 func main() {
-	env.MustLoadEnv()
+	ctx, stop := signal.NotifyContext(
+		context.Background(),
+		syscall.SIGINT,
+		syscall.SIGTERM,
+	)
+	defer stop()
 
-	container, cleanUp, err := di.InitializeApplication()
+	env.MustLoadEnv()
+	container, cleanUp, err := di.InitializeApplication(ctx)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println(err.Error())
 		return
 	}
+
+	srvErr := make(chan error, 1)
 	go func() {
-		container.Server.Start()
+		srvErr <- container.Server.Start()
 	}()
 
-	srvutil.WaitForSignalToShutdown()
+	select {
+	case <-srvErr:
+		fmt.Println("start running server failed")
+	case <-ctx.Done():
+		fmt.Println("start shutting server down")
+	}
 
 	cleanUp()
-
-	fmt.Println("application gracefully shutdown.")
+	fmt.Println("gracefully shutdown")
 }
