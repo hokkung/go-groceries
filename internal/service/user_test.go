@@ -1,11 +1,11 @@
 package service_test
 
 import (
-	"github.com/hokkung/go-groceries/internal/repository/mock"
-	"github.com/hokkung/go-groceries/internal/service"
 	"testing"
 
 	"github.com/golang/mock/gomock"
+	"github.com/hokkung/go-groceries/internal/repository/mock"
+	"github.com/hokkung/go-groceries/internal/service"
 	"github.com/stretchr/testify/suite"
 )
 

@@ -1,10 +1,12 @@
 package repository
 
 import (
-	"github.com/hokkung/go-groceries/config"
-	entity2 "github.com/hokkung/go-groceries/internal/entity"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+
+	"github.com/hokkung/go-groceries/config"
+
+	entity2 "github.com/hokkung/go-groceries/internal/entity"
 )
 
 type Entity interface {
