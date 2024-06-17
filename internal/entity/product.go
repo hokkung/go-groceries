@@ -1,8 +1,9 @@
 package entity
 
 import (
-	"github.com/hokkung/go-groceries/pkg/domain"
 	"gorm.io/gorm"
+
+	"github.com/hokkung/go-groceries/pkg/domain"
 )
 
 type Product struct {
