@@ -14,9 +14,17 @@ lint:
 .PHONY: test
 test: build
 	@echo "start running test"
-	go test -cover ./...
+	GOARCH=amd64 go test -cover ./...
 	@echo "finished running test"
 
+.PHONY: test-cov
+test-cov:
+	@echo "start running test coverage 😱😱😱"
+	GOARCH=amd64 go test ./... -coverprofile=coverage.out.tmp
+	cat coverage.out.tmp | grep -v "mock" > coverage.out
+	go tool cover -html=coverage.out -o coverage.html
+	open coverage.html
+	@echo "done test! good job bro! 🎉🎉🎉"
 
 .PHONY: build
 build: lint
