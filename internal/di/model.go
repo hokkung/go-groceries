@@ -26,6 +26,8 @@ var APISet = wire.NewSet(
 )
 
 var ConfigSet = wire.NewSet(
+	config.ProvideAppProperties,
+	config.ProvideMysqlProperties,
 	config.ProvideConfiguration,
 )
 
@@ -65,4 +67,5 @@ var ExternalSet = wire.NewSet(
 
 type ApplicationAPI struct {
 	Server *srv.Server
+	Config config.Configuration
 }
