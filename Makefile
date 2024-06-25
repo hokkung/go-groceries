@@ -4,6 +4,11 @@
 api:
 	go run ./cmd/api/main.go
 
+.PHONY: gen
+gen:
+	@echo "start generating code"
+	go generate ./...
+	@echo "start generating code"
 
 .PHONY: lint
 lint:
@@ -27,7 +32,13 @@ test-cov:
 	@echo "done test! good job bro! 🎉🎉🎉"
 
 .PHONY: build
-build: lint
+build: gen lint
 	@echo "start building application"
 	go build -o bin/api/main ./cmd/api/main.go
 	@echo "finished building application"
+
+.PHONY: wire
+wire:
+	@echo "start wiring"
+	wire ./...
+	@echo "finished generating wire"
