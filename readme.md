@@ -1,22 +1,40 @@
+# @go-groceries
 
-### Environment
+An example of microservice application written by Golang.
+This project is implemented by applying clean code architecture. 
+
+## Table of Contents
+- [Prerequisites](#prerequisites)
+- [Getting started](#getting-started)
+- [Environment](#environment)
+- [Testing](#testing)
+- [Internal Library](#internal-library)
+
+---
+## Prerequisites
+1. install Go 
+2. Install Wire [Official-Site](https://github.com/google/wire)
+3. Install Mockgen [Official-Site](https://github.com/golang/mock)
+
+---
+## Getting Started
+1. Start MYSQL
+   - `docker compose -f /docker-compose up`
+2. Create a `grocery` database 
+3. Run `make api`
+
+---
+## Environment
 ```
 export APP_SERVER_ADDR=:8081
 ```
 
-### How to start service
-1. Start MYSQL
-- `docker compose -f /docker-compose up`
-1. create a `grocery` database 
-2. go run ./cmd/api/main.go
+---
+## Testing
+1. Simply run command `make test`
 
-
-### How to run test
-1. Make sure you already create mockgen if dependency is required.
-   - `go generate ./...` to create mockgen file
-2. Run `go test ./...`
-
-### Thrid Party
+---
+## Internal Library
 1. Manage HTTP Server (https://github.com/hokkung/srv)
 2. Manage Repository (https://github.com/hokkung/gorem)
 3. Manage Redis (https://github.com/hokkung/redis)
