@@ -1,7 +1,10 @@
 # @go-groceries
 
 An example of microservice application written by Golang.
-This project is implemented by applying clean code architecture. 
+This project is implemented by applying clean code architecture.
+
+![GitHub Workflow Status](https://github.com/hokkung/go-groceries/actions/workflows/build.yml/badge.svg)
+
 
 ## Table of Contents
 - [Prerequisites](#prerequisites)
