@@ -5,8 +5,6 @@
 package mock_repository
 
 import (
-	reflect "reflect"
-
 	gomock "github.com/golang/mock/gomock"
 )
 
@@ -31,18 +29,4 @@ func NewMockProductRepository(ctrl *gomock.Controller) *MockProductRepository {
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockProductRepository) EXPECT() *MockProductRepositoryMockRecorder {
 	return m.recorder
-}
-
-// Model mocks base method.
-func (m *MockProductRepository) Model() string {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Model")
-	ret0, _ := ret[0].(string)
-	return ret0
-}
-
-// Model indicates an expected call of Model.
-func (mr *MockProductRepositoryMockRecorder) Model() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Model", reflect.TypeOf((*MockProductRepository)(nil).Model))
 }

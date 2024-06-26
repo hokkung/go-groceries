@@ -4,6 +4,7 @@ import (
 	"fmt"
 	handler2 "github.com/hokkung/go-groceries/internal/handler"
 	"github.com/hokkung/go-groceries/internal/handler/item"
+	ph "github.com/hokkung/go-groceries/internal/handler/product"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -11,7 +12,7 @@ import (
 )
 
 type Customizer struct {
-	productHandler handler2.ProductHandler
+	productHandler *ph.Product
 	userHandler    handler2.UserHandler
 	itemHandler    *item.ItemHandler
 }
@@ -38,7 +39,7 @@ func (c *Customizer) Register(s *srv.Server) {
 }
 
 func NewCustomizer(
-	productHandler handler2.ProductHandler,
+	productHandler *ph.Product,
 	userHandler handler2.UserHandler,
 	itemHandler *item.ItemHandler,
 ) *Customizer {
@@ -50,7 +51,7 @@ func NewCustomizer(
 }
 
 func ProvideCustomizer(
-	productHandler handler2.ProductHandler,
+	productHandler *ph.Product,
 	userHandler handler2.UserHandler,
 	itemHandler *item.ItemHandler,
 ) (srv.ServerCustomizer, func(), error) {

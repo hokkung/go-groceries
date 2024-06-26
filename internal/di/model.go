@@ -6,10 +6,12 @@ import (
 	catapi "github.com/hokkung/go-groceries/internal/client/cat_api"
 	handler2 "github.com/hokkung/go-groceries/internal/handler"
 	ih "github.com/hokkung/go-groceries/internal/handler/item"
+	product2 "github.com/hokkung/go-groceries/internal/handler/product"
 	repository2 "github.com/hokkung/go-groceries/internal/repository"
 	"github.com/hokkung/go-groceries/internal/server"
 	service2 "github.com/hokkung/go-groceries/internal/service"
 	"github.com/hokkung/go-groceries/internal/service/item"
+	"github.com/hokkung/go-groceries/internal/service/product"
 	"github.com/hokkung/go-groceries/pkg/cnt"
 	srv "github.com/hokkung/srv/server"
 )
@@ -38,7 +40,8 @@ var RepositorySet = wire.NewSet(
 )
 
 var ServiceSet = wire.NewSet(
-	service2.ProvideProductService,
+	wire.Bind(new(product.ProductService), new(*product.Product)),
+	product.ProvideProductService,
 	service2.ProvideUserService,
 
 	wire.Bind(new(item.ItemService), new(*item.Item)),
@@ -46,7 +49,7 @@ var ServiceSet = wire.NewSet(
 )
 
 var HandlerSet = wire.NewSet(
-	handler2.ProvideProductHandler,
+	product2.ProvideProductHandler,
 	handler2.ProvideUserHandler,
 	ih.ProvideItemHandler,
 )
