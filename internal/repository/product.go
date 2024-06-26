@@ -2,26 +2,22 @@ package repository
 
 import "gorm.io/gorm"
 
-
-//go:generate mockgen -source ./product.go -destination ./mock/mock_product.go 
+//go:generate mockgen -source ./product.go -destination ./mock/mock_product.go
 type ProductRepository interface {
-	Model() string
 }
 
-type productRepository struct {
+type Product struct {
 	DB *gorm.DB
 }
 
-func (r *productRepository) Model() string {
-	return "products"
-}
-
-func NewProductRepository(db *gorm.DB) *productRepository {
-	return &productRepository{
+// NewProductRepository creates instance
+func NewProductRepository(db *gorm.DB) *Product {
+	return &Product{
 		DB: db,
 	}
 }
 
+// ProvideProductRepository provides instance for di
 func ProvideProductRepository(db *gorm.DB) (ProductRepository, func(), error) {
-	return NewProductRepository(db), func(){}, nil
+	return NewProductRepository(db), func() {}, nil
 }
