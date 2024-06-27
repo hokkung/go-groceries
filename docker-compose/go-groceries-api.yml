@@ -1,0 +1,18 @@
+version: '3.1'
+services:
+    go-groceries-api:
+        image: go-groceries
+        container_name: go-groceries-api
+        restart: always
+        environment:
+            APP_NAME: groceries_api
+            APP_MYSQL_HOST: mysql
+            APP_MYSQL_PORT: 3306
+            APP_MYSQL_DB_NAME: grocery
+            APP_MYSQL_USERNAME: root
+            APP_MYSQL_PASSWORD: root
+            APP_SRV_SERVER_ADDR: :8081
+        ports:
+            - "8081:8081"
+
+## docker compose -f [FILE_NAME] up
