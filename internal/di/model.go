@@ -4,14 +4,14 @@ import (
 	"github.com/google/wire"
 	"github.com/hokkung/go-groceries/config"
 	catapi "github.com/hokkung/go-groceries/internal/client/cat_api"
-	handler2 "github.com/hokkung/go-groceries/internal/handler"
 	ih "github.com/hokkung/go-groceries/internal/handler/item"
-	product2 "github.com/hokkung/go-groceries/internal/handler/product"
+	ph "github.com/hokkung/go-groceries/internal/handler/product"
+	uh "github.com/hokkung/go-groceries/internal/handler/user"
 	repository2 "github.com/hokkung/go-groceries/internal/repository"
 	"github.com/hokkung/go-groceries/internal/server"
-	service2 "github.com/hokkung/go-groceries/internal/service"
 	"github.com/hokkung/go-groceries/internal/service/item"
 	"github.com/hokkung/go-groceries/internal/service/product"
+	"github.com/hokkung/go-groceries/internal/service/user"
 	"github.com/hokkung/go-groceries/pkg/cnt"
 	srv "github.com/hokkung/srv/server"
 )
@@ -42,15 +42,17 @@ var RepositorySet = wire.NewSet(
 var ServiceSet = wire.NewSet(
 	wire.Bind(new(product.ProductService), new(*product.Product)),
 	product.ProvideProductService,
-	service2.ProvideUserService,
+
+	wire.Bind(new(user.UserService), new(*user.User)),
+	user.ProvideUserService,
 
 	wire.Bind(new(item.ItemService), new(*item.Item)),
 	item.ProvideItem,
 )
 
 var HandlerSet = wire.NewSet(
-	product2.ProvideProductHandler,
-	handler2.ProvideUserHandler,
+	ph.ProvideProductHandler,
+	uh.ProvideUserHandler,
 	ih.ProvideItemHandler,
 )
 

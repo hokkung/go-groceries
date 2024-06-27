@@ -10,14 +10,14 @@ import (
 	"context"
 	"github.com/hokkung/go-groceries/config"
 	"github.com/hokkung/go-groceries/internal/client/cat_api"
-	"github.com/hokkung/go-groceries/internal/handler"
 	item2 "github.com/hokkung/go-groceries/internal/handler/item"
 	product2 "github.com/hokkung/go-groceries/internal/handler/product"
+	user2 "github.com/hokkung/go-groceries/internal/handler/user"
 	"github.com/hokkung/go-groceries/internal/repository"
 	"github.com/hokkung/go-groceries/internal/server"
-	"github.com/hokkung/go-groceries/internal/service"
 	"github.com/hokkung/go-groceries/internal/service/item"
 	"github.com/hokkung/go-groceries/internal/service/product"
+	"github.com/hokkung/go-groceries/internal/service/user"
 	server2 "github.com/hokkung/srv/server"
 )
 
@@ -40,8 +40,8 @@ func InitializeApplication(context2 context.Context) (*ApplicationAPI, func(), e
 		cleanup()
 		return nil, nil, err
 	}
-	userService := service.ProvideUserService(userRepository)
-	userHandler := handler.ProvideUserHandler(userService)
+	userUser := user.ProvideUserService(userRepository)
+	handler := user2.ProvideUserHandler(userUser)
 	catAPI, err := catapi.ProvideCatAPI()
 	if err != nil {
 		cleanup2()
@@ -50,7 +50,7 @@ func InitializeApplication(context2 context.Context) (*ApplicationAPI, func(), e
 	}
 	itemItem := item.ProvideItem(catAPI)
 	itemHandler := item2.ProvideItemHandler(itemItem)
-	serverCustomizer, cleanup3, err := server.ProvideCustomizer(product3, userHandler, itemHandler)
+	serverCustomizer, cleanup3, err := server.ProvideCustomizer(product3, handler, itemHandler)
 	if err != nil {
 		cleanup2()
 		cleanup()

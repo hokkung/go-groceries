@@ -1,25 +1,25 @@
-package service_test
+package user_test
 
 import (
+	"github.com/hokkung/go-groceries/internal/service/user"
 	"testing"
 
 	"github.com/golang/mock/gomock"
 	"github.com/hokkung/go-groceries/internal/repository/mock"
-	"github.com/hokkung/go-groceries/internal/service"
 	"github.com/stretchr/testify/suite"
 )
 
 type UserServiceTestSuite struct {
 	suite.Suite
 
-	underTest service.UserService
+	underTest user.UserService
 }
 
 func (s *UserServiceTestSuite) SetupTest() {
 	ctrl := gomock.NewController(s.T())
 	mockUserRepository := mock_repository.NewMockUserRepository(ctrl)
 
-	s.underTest = service.NewUserService(mockUserRepository)
+	s.underTest = user.NewUserService(mockUserRepository)
 }
 
 func (s *UserServiceTestSuite) TestGet() {

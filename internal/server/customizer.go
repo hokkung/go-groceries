@@ -2,9 +2,10 @@ package server
 
 import (
 	"fmt"
-	handler2 "github.com/hokkung/go-groceries/internal/handler"
 	"github.com/hokkung/go-groceries/internal/handler/item"
 	ph "github.com/hokkung/go-groceries/internal/handler/product"
+	"github.com/hokkung/go-groceries/internal/handler/user"
+
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -13,8 +14,34 @@ import (
 
 type Customizer struct {
 	productHandler *ph.Product
-	userHandler    handler2.UserHandler
+	userHandler    *user.Handler
 	itemHandler    *item.ItemHandler
+}
+
+// NewCustomizer creates instance
+func NewCustomizer(
+	productHandler *ph.Product,
+	userHandler *user.Handler,
+	itemHandler *item.ItemHandler,
+) *Customizer {
+	return &Customizer{
+		productHandler: productHandler,
+		userHandler:    userHandler,
+		itemHandler:    itemHandler,
+	}
+}
+
+// ProvideCustomizer provides instance for di
+func ProvideCustomizer(
+	productHandler *ph.Product,
+	userHandler *user.Handler,
+	itemHandler *item.ItemHandler,
+) (srv.ServerCustomizer, func(), error) {
+	return NewCustomizer(
+		productHandler,
+		userHandler,
+		itemHandler,
+	), func() {}, nil
 }
 
 func (c *Customizer) Register(s *srv.Server) {
@@ -36,28 +63,4 @@ func (c *Customizer) Register(s *srv.Server) {
 		"/search",
 		c.itemHandler.Search,
 	)
-}
-
-func NewCustomizer(
-	productHandler *ph.Product,
-	userHandler handler2.UserHandler,
-	itemHandler *item.ItemHandler,
-) *Customizer {
-	return &Customizer{
-		productHandler: productHandler,
-		userHandler:    userHandler,
-		itemHandler:    itemHandler,
-	}
-}
-
-func ProvideCustomizer(
-	productHandler *ph.Product,
-	userHandler handler2.UserHandler,
-	itemHandler *item.ItemHandler,
-) (srv.ServerCustomizer, func(), error) {
-	return NewCustomizer(
-		productHandler,
-		userHandler,
-		itemHandler,
-	), func() {}, nil
 }
