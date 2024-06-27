@@ -12,6 +12,7 @@ This project is implemented by applying clean code architecture.
 - [Environment](#environment)
 - [Testing](#testing)
 - [Internal Library](#internal-library)
+- [Reference](#reference)
 
 ---
 ## Prerequisites
@@ -21,8 +22,8 @@ This project is implemented by applying clean code architecture.
 
 ---
 ## Getting Started
-1. Start MYSQL
-   - `docker compose -f /docker-compose up`
+1. Start Admin, MySQL container
+   - `docker compose -f /docker-compose/{file_name} up`
 2. Create a `grocery` database 
 3. Run `make api`
 
@@ -38,6 +39,10 @@ export APP_SERVER_ADDR=:8081
 
 ---
 ## Internal Library
-1. Manage HTTP Server (https://github.com/hokkung/srv)
-2. Manage Repository (https://github.com/hokkung/gorem)
-3. Manage Redis (https://github.com/hokkung/redis)
+1. HTTP Server (https://github.com/hokkung/srv)
+2. Gorm Repository (https://github.com/hokkung/gorem)
+3. Redis (https://github.com/hokkung/redis)
+
+---
+## Reference
+- [Cat APIs](https://developers.thecatapi.com/view-account/ylX4blBYT9FaoVd6OhvR?report=bOoHBz-8t) 
