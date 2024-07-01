@@ -2,6 +2,9 @@ package server
 
 import (
 	"fmt"
+	"github.com/99designs/gqlgen/graphql/handler"
+	"github.com/99designs/gqlgen/graphql/playground"
+	"github.com/hokkung/go-groceries/graph"
 	"github.com/hokkung/go-groceries/internal/handler/item"
 	ph "github.com/hokkung/go-groceries/internal/handler/product"
 	"github.com/hokkung/go-groceries/internal/handler/user"
@@ -63,4 +66,16 @@ func (c *Customizer) Register(s *srv.Server) {
 		"/search",
 		c.itemHandler.Search,
 	)
+
+	// TODO: refactor this
+	gqlSrv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &graph.Resolver{}}))
+	s.Engine.POST("/query", func(c *gin.Context) {
+		gqlSrv.ServeHTTP(c.Writer, c.Request)
+	})
+
+	// TODO: refactor this
+	gqlPgh := playground.Handler("GraphQL playground", "/query")
+	s.Engine.GET("/", func(c *gin.Context) {
+		gqlPgh.ServeHTTP(c.Writer, c.Request)
+	})
 }
