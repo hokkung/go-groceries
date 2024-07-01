@@ -31,8 +31,8 @@ func main() {
 	}()
 
 	select {
-	case <-srvErr:
-		fmt.Println("start running server failed")
+	case e := <-srvErr:
+		fmt.Println("start running server failed", e.Error())
 	case <-ctx.Done():
 		fmt.Println("start shutting server down")
 	}
