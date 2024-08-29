@@ -9,6 +9,10 @@ import (
 	entity2 "github.com/hokkung/go-groceries/internal/entity"
 )
 
+type GormKey string
+
+const GormContext GormKey = "gormContext"
+
 type Entity interface {
 	Table() string
 }

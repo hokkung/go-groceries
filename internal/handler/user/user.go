@@ -1,10 +1,10 @@
 package user
 
 import (
+	"github.com/gin-gonic/gin"
 	"github.com/hokkung/go-groceries/internal/service/user"
 	"net/http"
-
-	"github.com/gin-gonic/gin"
+	"strconv"
 )
 
 type Handler struct {
@@ -27,6 +27,19 @@ func ProvideUserHandler(userService user.UserService) *Handler {
 	return NewUserHandler(userService)
 }
 
-func (h *Handler) Get(id int) int {
-	return h.userService.Get(id)
+func (h *Handler) Get(c *gin.Context) {
+	id := c.Param("id")
+
+	id2, err := strconv.Atoi(id)
+	if err != nil {
+		c.JSON(500, gin.H{})
+	}
+
+	res, err := h.userService.Get(c, id2)
+	if err != nil {
+		c.JSON(500, gin.H{})
+		return
+	}
+
+	c.JSON(200, gin.H{"user": res})
 }

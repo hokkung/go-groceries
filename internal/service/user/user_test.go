@@ -1,6 +1,7 @@
 package user_test
 
 import (
+	"context"
 	"github.com/hokkung/go-groceries/internal/service/user"
 	"testing"
 
@@ -24,9 +25,11 @@ func (s *UserServiceTestSuite) SetupTest() {
 
 func (s *UserServiceTestSuite) TestGet() {
 	one := 1
-	res := s.underTest.Get(one)
+	mockCtx := context.Background()
+	res, err := s.underTest.Get(mockCtx, one)
 
 	s.Equal(one, res)
+	s.Nil(err)
 }
 
 func TestUserServiceTestSuite(t *testing.T) {
