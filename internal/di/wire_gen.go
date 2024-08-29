@@ -13,6 +13,7 @@ import (
 	item2 "github.com/hokkung/go-groceries/internal/handler/item"
 	product2 "github.com/hokkung/go-groceries/internal/handler/product"
 	user2 "github.com/hokkung/go-groceries/internal/handler/user"
+	"github.com/hokkung/go-groceries/internal/middleware"
 	"github.com/hokkung/go-groceries/internal/repository"
 	"github.com/hokkung/go-groceries/internal/server"
 	"github.com/hokkung/go-groceries/internal/service/item"
@@ -29,6 +30,7 @@ func InitializeApplication(context2 context.Context) (*ApplicationAPI, func(), e
 	if err != nil {
 		return nil, nil, err
 	}
+	gormMiddleware := middleware.ProvideGormMiddleware(db)
 	productRepository, cleanup, err := repository.ProvideProductRepository(db)
 	if err != nil {
 		return nil, nil, err
@@ -50,7 +52,7 @@ func InitializeApplication(context2 context.Context) (*ApplicationAPI, func(), e
 	}
 	itemItem := item.ProvideItem(catAPI)
 	itemHandler := item2.ProvideItemHandler(itemItem)
-	serverCustomizer, cleanup3, err := server.ProvideCustomizer(product3, handler, itemHandler)
+	serverCustomizer, cleanup3, err := server.ProvideCustomizer(gormMiddleware, product3, handler, itemHandler)
 	if err != nil {
 		cleanup2()
 		cleanup()

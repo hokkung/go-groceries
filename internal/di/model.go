@@ -7,6 +7,7 @@ import (
 	ih "github.com/hokkung/go-groceries/internal/handler/item"
 	ph "github.com/hokkung/go-groceries/internal/handler/product"
 	uh "github.com/hokkung/go-groceries/internal/handler/user"
+	"github.com/hokkung/go-groceries/internal/middleware"
 	repository2 "github.com/hokkung/go-groceries/internal/repository"
 	"github.com/hokkung/go-groceries/internal/server"
 	"github.com/hokkung/go-groceries/internal/service/item"
@@ -54,6 +55,7 @@ var HandlerSet = wire.NewSet(
 	ph.ProvideProductHandler,
 	uh.ProvideUserHandler,
 	ih.ProvideItemHandler,
+	middleware.ProvideGormMiddleware,
 )
 
 var ClientSet = wire.NewSet(

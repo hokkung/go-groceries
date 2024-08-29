@@ -1,11 +1,12 @@
 package user
 
 import (
+	"context"
 	"github.com/hokkung/go-groceries/internal/repository"
 )
 
 type UserService interface {
-	Get(id int) int
+	Get(ctx context.Context, id int) (int, error)
 }
 
 type User struct {
@@ -22,6 +23,6 @@ func ProvideUserService(userRepository repository.UserRepository) *User {
 	return NewUserService(userRepository)
 }
 
-func (s *User) Get(id int) int {
-	return id
+func (s *User) Get(ctx context.Context, id int) (int, error) {
+	return id, nil
 }

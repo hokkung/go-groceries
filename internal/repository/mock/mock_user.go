@@ -5,9 +5,11 @@
 package mock_repository
 
 import (
+	context "context"
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
+	entity "github.com/hokkung/go-groceries/internal/entity"
 )
 
 // MockUserRepository is a mock of UserRepository interface.
@@ -31,6 +33,21 @@ func NewMockUserRepository(ctrl *gomock.Controller) *MockUserRepository {
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockUserRepository) EXPECT() *MockUserRepositoryMockRecorder {
 	return m.recorder
+}
+
+// FindByName mocks base method.
+func (m *MockUserRepository) FindByName(ctx context.Context, name string) (entity.User, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "FindByName", ctx, name)
+	ret0, _ := ret[0].(entity.User)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// FindByName indicates an expected call of FindByName.
+func (mr *MockUserRepositoryMockRecorder) FindByName(ctx, name interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByName", reflect.TypeOf((*MockUserRepository)(nil).FindByName), ctx, name)
 }
 
 // Model mocks base method.

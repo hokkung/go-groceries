@@ -3,11 +3,11 @@ package server
 import (
 	"fmt"
 	"github.com/99designs/gqlgen/graphql/handler"
-	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/hokkung/go-groceries/graph"
 	"github.com/hokkung/go-groceries/internal/handler/item"
 	ph "github.com/hokkung/go-groceries/internal/handler/product"
 	"github.com/hokkung/go-groceries/internal/handler/user"
+	"github.com/hokkung/go-groceries/internal/middleware"
 
 	"net/http"
 
@@ -16,6 +16,7 @@ import (
 )
 
 type Customizer struct {
+	gormMiddleware *middleware.GormMiddleware
 	productHandler *ph.Product
 	userHandler    *user.Handler
 	itemHandler    *item.ItemHandler
@@ -23,6 +24,7 @@ type Customizer struct {
 
 // NewCustomizer creates instance
 func NewCustomizer(
+	gormMiddleware *middleware.GormMiddleware,
 	productHandler *ph.Product,
 	userHandler *user.Handler,
 	itemHandler *item.ItemHandler,
@@ -31,16 +33,19 @@ func NewCustomizer(
 		productHandler: productHandler,
 		userHandler:    userHandler,
 		itemHandler:    itemHandler,
+		gormMiddleware: gormMiddleware,
 	}
 }
 
 // ProvideCustomizer provides instance for di
 func ProvideCustomizer(
+	gormMiddleware *middleware.GormMiddleware,
 	productHandler *ph.Product,
 	userHandler *user.Handler,
 	itemHandler *item.ItemHandler,
 ) (srv.ServerCustomizer, func(), error) {
 	return NewCustomizer(
+		gormMiddleware,
 		productHandler,
 		userHandler,
 		itemHandler,
@@ -48,6 +53,8 @@ func ProvideCustomizer(
 }
 
 func (c *Customizer) Register(s *srv.Server) {
+	s.Engine.Use(c.gormMiddleware.Middleware())
+
 	s.Engine.GET("/ping", func(ctx *gin.Context) {
 		id := c.productHandler.Get(1)
 		ctx.JSON(http.StatusOK, gin.H{
@@ -56,26 +63,15 @@ func (c *Customizer) Register(s *srv.Server) {
 	})
 
 	userGroup := s.Engine.Group("/users")
-	userGroup.POST(
-		"/login",
-		c.userHandler.Login,
-	)
+	userGroup.POST("/login", c.userHandler.Login)
+	userGroup.GET("/:id", c.userHandler.Get)
 
 	itemGroup := s.Engine.Group("/items")
-	itemGroup.GET(
-		"/search",
-		c.itemHandler.Search,
-	)
+	itemGroup.GET("/search", c.itemHandler.Search)
 
 	// TODO: refactor this
 	gqlSrv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &graph.Resolver{}}))
 	s.Engine.POST("/query", func(c *gin.Context) {
 		gqlSrv.ServeHTTP(c.Writer, c.Request)
-	})
-
-	// TODO: refactor this
-	gqlPgh := playground.Handler("GraphQL playground", "/query")
-	s.Engine.GET("/", func(c *gin.Context) {
-		gqlPgh.ServeHTTP(c.Writer, c.Request)
 	})
 }
