@@ -7,7 +7,6 @@ on:
 jobs:
   auto-assign:
     runs-on: ubuntu-latest
-
     steps:
       - name: Auto assign PR to the author
         uses: actions/github-script@v6
