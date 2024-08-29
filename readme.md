@@ -36,7 +36,7 @@ This project is implemented by applying clean code architecture.
 ## Prerequisites
 1. install Go 
 2. Install Wire [Official-Site](https://github.com/google/wire)
-3. Install Mockgen [Official-Site](https://github.com/golang/mock)
+3. Install MockGen [Official-Site](https://github.com/golang/mock)
 4. Install GraphQL [Official-Site](https://gqlgen.com/getting-started)
 ---
 ## Getting Started

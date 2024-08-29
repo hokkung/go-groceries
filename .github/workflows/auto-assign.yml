@@ -12,6 +12,7 @@ jobs:
       - name: Auto assign PR to the author
         uses: actions/github-script@v6
         with:
+          github-token: ${{ secrets.WORK_FLOW_TOKEN }}
           script: |
             await github.rest.issues.addAssignees({
               owner: context.repo.owner,
