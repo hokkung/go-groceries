@@ -33,7 +33,7 @@ test-cov:
 
 .PHONY: build
 build: gen lint
-	@echo "start building application"
+	@echo "start building application 😱😱😱"
 	go build -o bin/api/main ./cmd/api/main.go
 	@echo "finished building application"
 
