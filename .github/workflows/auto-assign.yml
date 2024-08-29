@@ -1,0 +1,25 @@
+name: Auto Assign Pull Request
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  auto-assign:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Auto assign PR to the author
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const github = require('@actions/github');
+            const context = github.context;
+            const { owner, repo } = context.repo;
+            
+            await github.rest.issues.addAssignees({
+              owner: owner,
+              repo: repo,
+              issue_number: context.issue.number,
+              assignees: [context.actor],
+            });
