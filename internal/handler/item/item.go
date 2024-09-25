@@ -50,8 +50,7 @@ func (h *ItemHandler) Search(ctx *gin.Context) {
 	ctx.JSON(
 		http.StatusOK,
 		&handler.Response[[]SearchResponse]{
-			Status: http.StatusOK,
-			Data:   res,
+			Data: res,
 		},
 	)
 }

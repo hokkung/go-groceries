@@ -1,0 +1,64 @@
+definitions:
+  github_com_hokkung_go-groceries_internal_handler.Response-internal_handler_user_User:
+    properties:
+      data:
+        $ref: '#/definitions/internal_handler_user.User'
+    type: object
+  internal_handler_user.User:
+    properties:
+      id:
+        type: integer
+    type: object
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server Petstore server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Go Groceries APIs
+  version: "1.0"
+paths:
+  /users/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: "1"
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_hokkung_go-groceries_internal_handler.Response-internal_handler_user_User'
+        "500":
+          description: Internal Server Error
+      summary: get user by id
+      tags:
+      - users
+  /users/login:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: login
+      tags:
+      - users
+schemes:
+- http
+- https
+swagger: "2.0"
