@@ -8,6 +8,8 @@ import (
 	ph "github.com/hokkung/go-groceries/internal/handler/product"
 	"github.com/hokkung/go-groceries/internal/handler/user"
 	"github.com/hokkung/go-groceries/internal/middleware"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 
 	"net/http"
 
@@ -55,6 +57,7 @@ func ProvideCustomizer(
 func (c *Customizer) Register(s *srv.Server) {
 	s.Engine.Use(c.gormMiddleware.Middleware())
 
+	s.Engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	s.Engine.GET("/ping", func(ctx *gin.Context) {
 		id := c.productHandler.Get(1)
 		ctx.JSON(http.StatusOK, gin.H{

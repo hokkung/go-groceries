@@ -42,3 +42,15 @@ wire:
 	@echo "start wiring"
 	wire ./...
 	@echo "finished generating wire"
+
+.PHONY: swagger
+swag:
+	@echo "start swagging"
+	swag init --parseDependency -g cmd/api/main.go
+	@echo "finished swagging"
+
+.PHONY: swag-fmt
+swag-fmt:
+	@echo "start formating swagger docs"
+	swag fmt
+	@echo "finished formating swagger docs"
