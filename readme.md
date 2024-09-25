@@ -38,6 +38,7 @@ This project is implemented by applying clean code architecture.
 2. Install Wire [Official-Site](https://github.com/google/wire)
 3. Install MockGen [Official-Site](https://github.com/golang/mock)
 4. Install GraphQL [Official-Site](https://gqlgen.com/getting-started)
+5. Install [SwagGo](https://github.com/swaggo/swag)
 ---
 ## Getting Started
 1. Start Admin, MySQL container
