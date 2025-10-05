@@ -23,6 +23,7 @@ go.work
 /bin*
 
 .idea/
+.vscode
 
 coverage.*
 
