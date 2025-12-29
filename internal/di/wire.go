@@ -12,3 +12,8 @@ func InitializeApplication(context context.Context) (*ApplicationAPI, func(), er
 	wire.Build(APISet)
 	return &ApplicationAPI{}, func() {}, nil
 }
+
+func InitializeInternalApplication(context context.Context) (*InternalApplicationAPI, func(), error) {
+	wire.Build(InternalAPISet)
+	return &InternalApplicationAPI{}, func() {}, nil
+}

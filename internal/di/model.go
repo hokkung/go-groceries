@@ -23,15 +23,23 @@ var APISet = wire.NewSet(
 	ServiceSet,
 	HandlerSet,
 	ClientSet,
-	InternalSet,
+	ServerSet,
 	ExternalSet,
 	wire.Struct(new(ApplicationAPI), "*"),
+)
+
+var InternalAPISet = wire.NewSet(
+	ConfigSet,
+	InternalServerSet,
+	ExternalSet,
+	wire.Struct(new(InternalApplicationAPI), "*"),
 )
 
 var ConfigSet = wire.NewSet(
 	config.ProvideAppProperties,
 	config.ProvideMysqlProperties,
 	config.ProvideConfiguration,
+	config.ProvideInternalAPIConfiguration,
 )
 
 var RepositorySet = wire.NewSet(
@@ -63,8 +71,12 @@ var ClientSet = wire.NewSet(
 	catapi.ProvideCatAPI,
 )
 
-var InternalSet = wire.NewSet(
+var ServerSet = wire.NewSet(
 	server.ProvideCustomizer,
+)
+
+var InternalServerSet = wire.NewSet(
+	server.ProvideInternalCustomizer,
 )
 
 var ExternalSet = wire.NewSet(
@@ -75,4 +87,9 @@ var ExternalSet = wire.NewSet(
 type ApplicationAPI struct {
 	Server *srv.Server
 	Config config.Configuration
+}
+
+type InternalApplicationAPI struct {
+	Server *srv.Server
+	Config config.InternalAPIConfiguration
 }
