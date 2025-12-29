@@ -2,11 +2,13 @@ package config
 
 import (
 	"fmt"
+
 	"github.com/kelseyhightower/envconfig"
 )
 
 type AppProperties struct {
 	Name string `envconfig:"NAME" default:"groceries_api"`
+	Env  string `envconfig:"ENV" default:"dev"`
 }
 
 // NewAppProperties creates instance

@@ -28,3 +28,4 @@ go.work
 coverage.*
 
 .env
+.DS_Store
